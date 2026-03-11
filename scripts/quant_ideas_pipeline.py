@@ -334,20 +334,53 @@ def implication_for_market(item: Item) -> str:
 
 def inspiration(item: Item) -> dict[str, str]:
     t = f"{item.title} {item.summary}".lower()
+    title = item.title
 
     hypothesis = "可围绕“微结构变化 → 成交冲击 → 短周期收益/回撤”建立可检验假设，优先验证在高波动时段与低流动性时段是否显著。"
-    model_path = "先用可解释的线性/树模型做基线，再叠加轻量时序模型（TCN/Transformer）；评估指标建议同时看方向准确率、冲击成本、尾部回撤三组指标。"
+    model_path = "先用可解释的线性/树模型做基线，再叠加轻量时序模型（TCN/Transformer）；评估指标同时覆盖方向准确率、冲击成本与尾部回撤。"
     data_watch = "数据面建议并行跟踪逐笔成交、L2盘口、资金费率、未平仓量与交易所规则变更，并统一成事件标签 + 连续特征两套输入。"
     execution = "执行层建议先做离线仿真与回放，确认容量/滑点边界后再灰度实盘；实盘阶段用分时段参与率与冲击阈值双重约束控制风险。"
 
-    if "reinforcement" in t or "imitation" in t:
-        model_path = "建模上可采用“行为克隆预训练 + 离线RL微调”的两阶段路线，并把交易成本与库存风险直接写入奖励函数，避免仅优化方向准确率。"
-    if "order book" in t or "microstructure" in t:
+    if "slippage-at-risk" in t or ("liquidity risk" in t and "perpetual" in t):
+        hypothesis = "把 SaR 指标与盘口深度、清算链路和做市商集中度联动，检验它是否能提前预警‘滑点放大 → 连锁平仓 → 流动性抽离’这一压力链条。"
+        model_path = "先做简单阈值与分位数预警模型，再尝试把 SaR 作为时变风险因子并入执行模型，用来动态收缩仓位与参与率。"
+        data_watch = "重点监控多档盘口深度、资金费率、爆仓数据、未平仓量和保险基金变化，形成实时压力面板。"
+        execution = "实盘上可把 SaR 直接接入下单前风控，在 SaR 抬升时降低单笔规模、放宽执行周期并限制在薄深度时段加仓。"
+    elif "algoxpert" in t or "overfitting" in t:
+        hypothesis = "把“参数稳定区间”替代“单点最优参数”作为研究验收标准，检验策略在滚动窗口与 regime 切换下是否仍保持收益/回撤比稳定。"
+        model_path = "研究流程上应引入 IS / WFA / OOS 三阶段门槛，并把 purge gap、catastrophic veto 与参数锁定写入统一模板。"
+        data_watch = "除常规收益指标外，应同步看参数漂移、窗口间表现衰减、换目标函数后的排序变化，识别伪稳健策略。"
+        execution = "真正落地时不要直接上最优回测版本，而是优先上线通过稳定区间检验、且对交易成本不敏感的保守参数集。"
+    elif "dex" in t and "dynamic fees" in t:
+        hypothesis = "把 DEX 费率变动视作微结构状态变量，检验费率切换是否会系统性改变订单流去向、套利活跃度与滑点分布。"
+        model_path = "可先建立分状态回归或 regime-switching 模型，把费率、池子深度与波动水平联合解释成交质量。"
+        data_watch = "重点跟踪不同池子的费率、深度、成交量、价格偏离与套利活动，观察高活跃和低活跃环境下的差异。"
+        execution = "若用于交易路由，优先在仿真中测试‘低费率优先’与‘低滑点优先’两种路由规则，避免只看名义手续费。"
+    elif "uncertainty quantification" in t or "selective prediction" in t:
+        hypothesis = "把 selective prediction 思路迁移到信号闸门：当模型置信度不足时主动放弃交易，检验是否能显著改善胜率和尾部回撤。"
+        model_path = "建模上可在原有预测器外包一层置信度/覆盖率控制模块，用统一阈值管理‘出手/不出手’决策。"
+        data_watch = "重点跟踪各类置信边界、拒绝率、覆盖率和放弃交易后的绩效变化，而不是只看保留下来的命中率。"
+        execution = "更适合先在纸面交易或低频策略里验证；若拒绝机制有效，再推广到高频信号筛选与自动化上线闸门。"
+    elif "adaptive llm decoding" in t:
+        hypothesis = "可借鉴其‘按状态分配预算’思想，把算力/延迟预算动态分配到不同研究模块上，检验是否能在固定资源下提升实验效率。"
+        model_path = "不是直接预测价格，而是做一个‘研究调度器’：简单任务走轻模型，高不确定任务自动切换到更重的推理链路。"
+        data_watch = "建议跟踪不同任务类型下的耗时、正确率、失败率与重试成本，形成统一的算力分配报表。"
+        execution = "先用于研究基础设施与实验编排，而不是直接用于下单；确认节省资源且不降质量后，再纳入日常研究流水线。"
+    elif "reinforcement" in t or "imitation" in t:
+        hypothesis = "把多阶段决策、库存风险和交易成本一起写入奖励函数，检验 RL/模仿学习在执行控制问题上是否优于静态规则。"
+        model_path = "可采用‘行为克隆预训练 + 离线RL微调’两阶段路线，用历史成交回放降低探索风险。"
+        data_watch = "重点观察库存路径、成交率、滑点和尾部风险是否同步改善，避免只看单一收益指标。"
+        execution = "先做离线策略评估和保守回放，再在小资金、低杠杆环境中灰度验证策略是否稳定。"
+    elif "order book" in t or "microstructure" in t:
         hypothesis = "优先验证盘口斜率、队列位置变化、撤单密度等微结构变量对未来5-30分钟价格路径与成交质量的解释力，并测试在不同交易时段的稳定性。"
-    if "crypto" in t or "perpetual" in t:
-        data_watch = "建议把现货-永续基差、资金费率、未平仓量、链上稳定币净流入做联合监控，用来识别“流动性抽离/回补”切换时点。"
-    if "github" in item.kind.lower() or "simulator" in t:
-        execution = "可直接复用开源框架快速搭建回测与仿真流水线，先做参数敏感性扫描，再把通过阈值的策略推进到小资金灰度。"
+        model_path = "先做多层盘口特征的线性/树模型基线，再叠加时序卷积或轻量 Transformer 检查是否存在稳定增益。"
+        data_watch = "建议记录盘口深度曲线、主动/被动成交占比、撤单率和价差变化，形成可回放的微结构样本库。"
+        execution = "更适合先做分品种、分时段的小范围实验，确认微结构信号不是由个别异常时段驱动后再扩大样本。"
+    elif item.kind == "GitHub":
+        hypothesis = f"可直接围绕《{title}》提供的模块化能力搭建原型，检验它是否能显著缩短从研究想法到可运行实验的时间。"
+        model_path = "先复现仓库自带示例，再把其中的数据接口、执行模块或评估模块替换成你的真实口径，避免一次性重写全部流程。"
+        data_watch = "重点看代码结构是否利于接入你现有数据、是否具备回放/仿真能力，以及是否便于追加日志和评估指标。"
+        execution = "如果样例可跑通，优先把它作为研究脚手架而不是生产系统；确认稳定后再逐步替换为你自己的模块。"
 
     return {
         "hypothesis": hypothesis,
@@ -447,7 +480,7 @@ def conclusion_detail(item: Item, idx: int) -> str:
     return f"想法{idx}：围绕《{item.title}》的核心信息，先明确可检验假设与评价指标，再做分层回测验证稳健性。重点解读：{base}"
 
 
-def filter_recent_items(items: list[Item], now: datetime, max_age_hours: int = 48) -> list[Item]:
+def filter_recent_items(items: list[Item], now: datetime, max_age_hours: int = 24) -> list[Item]:
     recent: list[Item] = []
     for item in items:
         try:
@@ -543,9 +576,6 @@ def build_markdown(
     for idx, item in enumerate(focus_items[:7], 1):
         ins = inspiration(item)
         core = chinese_core_summary(item)
-        reason = "与量化研究主线高度相关，可直接形成可验证实验或市场观察假设。"
-        if item.kind == "新闻":
-            reason = "可能改变波动率、流动性或交易成本，对短中期研究假设有直接影响。"
         lines += [
             f"- 标题：{item.title}",
             f"- 类型：{item.kind}",
@@ -554,7 +584,6 @@ def build_markdown(
             f"- 链接：{item.link}",
             f"- 评分：{item.score}/5",
             f"- 核心摘要：{core}",
-            f"- 为什么值得关注：{reason}",
             "- 实用启发：",
             f"  - 研究假设：{ins['hypothesis']}",
             f"  - 建模路径：{ins['model_path']}",
@@ -575,7 +604,7 @@ def build_markdown(
             for item in bucket:
                 lines += [
                     f"- 标题：{item.title}",
-                    f"  - 中文解读：{chinese_line_summary(item, 'research')}",
+                    f"  - 内容：{chinese_line_summary(item, 'research')}",
                     f"  - 链接：{item.link}",
                     "",
                 ]
@@ -591,7 +620,7 @@ def build_markdown(
             for item in bucket:
                 lines += [
                     f"- 标题：{item.title}",
-                    f"  - 中文解读：{chinese_line_summary(item, 'markets')}",
+                    f"  - 内容：{chinese_line_summary(item, 'markets')}",
                     f"  - 链接：{item.link}",
                     f"  - 潜在交易含义：{implication_for_market(item)}",
                     "",
@@ -689,7 +718,7 @@ def run(base: Path, run_time: datetime, github_status: str, notion_status: str, 
     ensure_dirs(base)
 
     raw_items, source_names, source_errors = collect_items(base)
-    raw_items = filter_recent_items(raw_items, run_time, max_age_hours=48)
+    raw_items = filter_recent_items(raw_items, run_time, max_age_hours=24)
     all_items = dedup(raw_items)
 
     for item in all_items:
