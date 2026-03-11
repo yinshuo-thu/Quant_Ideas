@@ -12,3 +12,6 @@
 - 2026-03-12: Upgraded key summaries to Chinese-first output: detailed Chinese for top items, concise Chinese for later sections.
 - 2026-03-12: Styled 今日结论 first-level headings as red + bold in Notion while keeping Markdown/GitHub readable.
 - 2026-03-12: Switched GitHub target repo to `Quant_Ideas_Everyday` and updated README links to absolute, URL-encoded GitHub URLs.
+- 2026-03-12: Replaced “对我的直接启发” with “实用启发” and merged to 4 higher-signal actionable bullets.
+- 2026-03-12: Upgraded Research/Markets line items to richer Chinese explanations for direct readability.
+- 2026-03-12: Expanded 今日结论 wording from terse bullets to concrete, execution-oriented narratives.

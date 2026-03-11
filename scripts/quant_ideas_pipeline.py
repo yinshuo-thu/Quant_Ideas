@@ -334,32 +334,26 @@ def implication_for_market(item: Item) -> str:
 
 def inspiration(item: Item) -> dict[str, str]:
     t = f"{item.title} {item.summary}".lower()
-    feature = "盘口不平衡、价量冲击与成交后短期反转因子"
-    label = "5-30分钟方向标签 + 成交质量标签（滑点/冲击）"
-    model = "轻量时序模型（TCN/Transformer）与在线更新线性基线"
-    data = "逐笔成交、L2订单簿、交易所公告与资金费率"
-    execution = "分时段动态参与率 + 冲击成本约束"
-    event = "宏观流动性与交易所规则变化驱动的波动率再定价"
-    watch = "价差、深度、撤单率、资金费率、跨市场相关性"
+
+    hypothesis = "可围绕“微结构变化 → 成交冲击 → 短周期收益/回撤”建立可检验假设，优先验证在高波动时段与低流动性时段是否显著。"
+    model_path = "先用可解释的线性/树模型做基线，再叠加轻量时序模型（TCN/Transformer）；评估指标建议同时看方向准确率、冲击成本、尾部回撤三组指标。"
+    data_watch = "数据面建议并行跟踪逐笔成交、L2盘口、资金费率、未平仓量与交易所规则变更，并统一成事件标签 + 连续特征两套输入。"
+    execution = "执行层建议先做离线仿真与回放，确认容量/滑点边界后再灰度实盘；实盘阶段用分时段参与率与冲击阈值双重约束控制风险。"
 
     if "reinforcement" in t or "imitation" in t:
-        model = "行为克隆 + 离线RL 的执行策略组合"
+        model_path = "建模上可采用“行为克隆预训练 + 离线RL微调”的两阶段路线，并把交易成本与库存风险直接写入奖励函数，避免仅优化方向准确率。"
     if "order book" in t or "microstructure" in t:
-        feature = "多档盘口斜率、队列位置变化、被动成交概率特征"
+        hypothesis = "优先验证盘口斜率、队列位置变化、撤单密度等微结构变量对未来5-30分钟价格路径与成交质量的解释力，并测试在不同交易时段的稳定性。"
     if "crypto" in t or "perpetual" in t:
-        data = "交易所资金费率、未平仓量、链上稳定币流入"
-        event = "现货/永续/期货三市场联动的微结构变化"
+        data_watch = "建议把现货-永续基差、资金费率、未平仓量、链上稳定币净流入做联合监控，用来识别“流动性抽离/回补”切换时点。"
     if "github" in item.kind.lower() or "simulator" in t:
-        execution = "先在仿真环境做冲击敏感性实验，再灰度实盘"
+        execution = "可直接复用开源框架快速搭建回测与仿真流水线，先做参数敏感性扫描，再把通过阈值的策略推进到小资金灰度。"
 
     return {
-        "feature": feature,
-        "label": label,
-        "model": model,
-        "data": data,
+        "hypothesis": hypothesis,
+        "model_path": model_path,
+        "data_watch": data_watch,
         "execution": execution,
-        "event": event,
-        "watch": watch,
     }
 
 
@@ -403,6 +397,54 @@ def chinese_brief_summary(item: Item) -> str:
     if item.kind == "新闻":
         return "反映近期市场结构或交易机制变化，适合做事件标签跟踪。"
     return "提供了新的研究线索，值得作为实验池候选。"
+
+
+def chinese_line_summary(item: Item, line_kind: str) -> str:
+    t = f"{item.title} {item.summary}".lower()
+    title = item.title
+
+    if line_kind == "research":
+        if "slippage-at-risk" in t:
+            return "该研究把滑点风险从历史回看改为盘口前瞻估计，可直接用于永续合约的实时风险预警与仓位约束设计。落地时建议联动清算事件和深度变化做分层回测。"
+        if "overfitting" in t or "algoxpert" in t:
+            return "该框架强调从参数稳定区间出发而非单点最优，并通过 IS/WFA/OOS 分段检验削弱过拟合。对研究团队价值在于把验收流程标准化，减少事后调参偏差。"
+        if "dex" in t and "dynamic fees" in t:
+            return "文章揭示 DEX 在动态费率下会围绕订单流展开策略博弈，进而改变执行滑点与噪音交易成本。可把费率机制变更视作事件变量，评估其对流动性迁移的影响。"
+        if "order book" in t or "microstructure" in t:
+            return "内容聚焦订单簿结构、订单流与执行冲击的联动关系。建议将盘口斜率、队列位置与撤单密度纳入特征池，并按交易时段分层检验稳定性。"
+        if "reinforcement" in t or "imitation" in t:
+            return "该方向强调在动态环境下联合优化收益、成本与库存风险，核心用途是执行策略与时变风控控制器。实践上建议先做离线策略评估，再做小规模在线实验。"
+        if "survey" in t:
+            return "这是一篇综述类工作，价值在于系统整理已有方法与评估口径。适合作为研究地图，用来快速定位可复现路线与尚未覆盖的实验空白。"
+        if "benchmark" in t or "framework" in t:
+            return "该条目偏研究基础设施，重点在于提供标准化评估流程或可比较基准。可直接用于统一实验口径，减少不同策略之间“不可比”的问题。"
+        if item.kind == "GitHub":
+            return f"该开源仓库（{title}）可直接用于搭建研究/回测原型，价值在于缩短从想法到实验的路径。建议先做样例复现，再按你的数据口径替换模块。"
+        return f"该研究围绕《{title}》提出了可复现的技术路线。建议先抽取其核心变量定义、评价指标与实验设定，再做小样本复现验证可迁移性。"
+
+    # markets
+    if "native rollups" in t:
+        return "这条更新指向以太坊扩容与验证机制可能出现结构变化，若落地将影响 L2 成本、吞吐与生态资金分布。短期可先作为“基础设施催化”事件持续跟踪。"
+    if "funding rate" in t:
+        return "资金费率转负通常意味着永续市场短期情绪偏空、套保需求上升。若与持仓增长同时出现，往往对应更高波动与更频繁的流动性抽离。"
+    if "orderbook" in t or "order book" in t:
+        return "订单簿失衡通常先体现在盘口深度不对称和冲击成本上升，再反馈到价格波动加速。实操上可结合挂单深度和主动成交占比来判断失衡持续性。"
+    if "local high" in t or "liquidity sweep" in t:
+        return "价格冲高后的流动性扫单信号常用于识别“突破延续”与“假突破回落”分叉。建议联动成交量、资金费率和基差变化做确认。"
+    if any(k in t for k in ["exchange", "listing", "fee", "contract", "venue"]):
+        return "这类交易所规则或费用变化通常会先重塑交易成本和做市意愿，再影响策略容量与执行质量。建议同步观察价差、深度和冲击成本三项指标。"
+    if any(k in t for k in ["bitcoin", "ether", "crypto", "perpetual"]):
+        return "该信息与加密市场结构直接相关，重点在于现货、永续与资金费率链路是否出现背离。可作为短周期波动与流动性切换的先行信号。"
+    if any(k in t for k in ["liquidity", "yield", "macro", "rate"]):
+        return "这条市场更新反映流动性或风险偏好正在变化，可能先影响成交深度与波动结构，再传导到跨资产相关性。建议将其标记为宏观/流动性事件并持续跟踪。"
+    return "该市场信息可作为事件驱动观察点，建议结合成交活跃度、相关性与波动率变化做持续跟踪，而不是仅看单条新闻方向。"
+
+
+def conclusion_detail(item: Item, idx: int) -> str:
+    base = chinese_core_summary(item)
+    if len(base) > 90:
+        base = base[:90] + "…"
+    return f"想法{idx}：围绕《{item.title}》的核心信息，先明确可检验假设与评价指标，再做分层回测验证稳健性。重点解读：{base}"
 
 
 def filter_recent_items(items: list[Item], now: datetime, max_age_hours: int = 48) -> list[Item]:
@@ -513,14 +555,11 @@ def build_markdown(
             f"- 评分：{item.score}/5",
             f"- 核心摘要：{core}",
             f"- 为什么值得关注：{reason}",
-            "- 对我的直接启发：",
-            f"  - 候选特征：{ins['feature']}",
-            f"  - 候选标签：{ins['label']}",
-            f"  - 候选模型：{ins['model']}",
-            f"  - 候选数据源：{ins['data']}",
-            f"  - 候选执行优化思路：{ins['execution']}",
-            f"  - 候选事件驱动研究方向：{ins['event']}",
-            f"  - 候选市场观察清单：{ins['watch']}",
+            "- 实用启发：",
+            f"  - 研究假设：{ins['hypothesis']}",
+            f"  - 建模路径：{ins['model_path']}",
+            f"  - 数据与监控：{ins['data_watch']}",
+            f"  - 执行落地：{ins['execution']}",
             "",
         ]
         if idx < len(focus_items[:7]):
@@ -534,7 +573,12 @@ def build_markdown(
             lines.append("- 暂无高相关更新")
         else:
             for item in bucket:
-                lines.append(f"- {item.title}｜{chinese_brief_summary(item)}｜{item.link}")
+                lines += [
+                    f"- 标题：{item.title}",
+                    f"  - 中文解读：{chinese_line_summary(item, 'research')}",
+                    f"  - 链接：{item.link}",
+                    "",
+                ]
         lines.append("")
 
     lines.append("## 三、Markets Line")
@@ -545,7 +589,13 @@ def build_markdown(
             lines.append("- 暂无高相关更新")
         else:
             for item in bucket:
-                lines.append(f"- {item.title}｜{chinese_brief_summary(item)}｜{item.link}｜潜在交易含义：{implication_for_market(item)}")
+                lines += [
+                    f"- 标题：{item.title}",
+                    f"  - 中文解读：{chinese_line_summary(item, 'markets')}",
+                    f"  - 链接：{item.link}",
+                    f"  - 潜在交易含义：{implication_for_market(item)}",
+                    "",
+                ]
         lines.append("")
 
     lines.append("## 四、备选阅读（评分 3/5）")
@@ -563,14 +613,14 @@ def build_markdown(
         lines.append("- 暂无 4/5 以上信号，先补足信息源质量。")
     else:
         for idx, item in enumerate(top3, 1):
-            lines.append(f"- 想法{idx}：围绕《{item.title}》提炼可验证研究假设，优先做小样本快速回测。")
+            lines.append(f"- {conclusion_detail(item, idx)}")
     lines += ["", "<!-- SPACER -->", ""]
 
     lines.append("**未来 7 天最值得验证的 3 个实验方向**")
     lines += [
-        "- 方向1：构建盘口斜率 + 成交冲击的短周期 alpha，验证在高波动时段的稳定性。",
-        "- 方向2：将交易所规则/费用变化转成事件标签，检验对成交质量和容量的影响。",
-        "- 方向3：在加密市场加入资金费率与未平仓量共振特征，做跨市场联动预测。",
+        "- 方向1（微结构执行）：围绕盘口斜率、队列位置与撤单密度构建短周期信号，并按不同时段、波动分位、深度分位做分层回测，确认信号在高冲击环境下是否仍稳定。",
+        "- 方向2（事件标签体系）：把交易所规则变化、费用调整、合约上新和流动性异常统一编码成事件标签，检验其对滑点、成交率、策略容量与风格暴露的持续影响。",
+        "- 方向3（跨市场联动）：在加密市场把资金费率、未平仓量、基差与链上稳定币流入做联合建模，观察“风险偏好切换 → 流动性迁移 → 波动放大”这条链路是否可预测。",
         "",
         "<!-- SPACER -->",
         "",
@@ -578,9 +628,9 @@ def build_markdown(
 
     lines.append("**今日最值得持续跟踪的 3 个市场主题**")
     lines += [
-        "- 主题1：全球流动性与利率预期对风险资产相关性的再定价。",
-        "- 主题2：交易所费用、上新与合约规则变化带来的微结构冲击。",
-        "- 主题3：加密现货-永续-期货链路中的波动率与流动性迁移。",
+        "- 主题1（流动性再定价）：跟踪全球流动性与利率预期变化对跨资产相关性的再定价过程，重点看权益-加密-商品之间的同步性是否增强或断裂。",
+        "- 主题2（交易机制冲击）：跟踪交易所费用、撮合规则和产品结构变化，重点看其是否导致做市深度下降、价差抬升和冲击成本上行。",
+        "- 主题3（加密结构变化）：持续监控现货-永续-期货三市场的联动强度，重点识别资金费率拐点与持仓结构变化是否先于价格波动扩散。",
     ]
     lines.append("")
 
