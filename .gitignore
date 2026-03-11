@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local secrets / runtime config
+.env
+.env.*
+state/notion.env
+state/*.secret
+
+# Local caches
+cache/*.xml
+cache/*.json
+
+# Optional local logs (keep explicit acceptance logs if needed)
+logs/*.tmp
