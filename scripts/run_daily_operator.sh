@@ -28,16 +28,19 @@ PY
 )"
 
 NOTION_OK=失败
+NOTION_URL=""
 REASON=""
 if NOTION_RAW=$(python3 scripts/sync_notion.py --base "$BASE" --markdown "$MARKDOWN" --title "$TITLE" 2>/dev/null); then
-  NOTION_CHECK=$(python3 - <<'PY' "$NOTION_RAW"
-import json,sys
-print('ok' if json.loads(sys.argv[1])['result']['ok'] else 'fail')
+  eval "$(python3 - <<'PY' "$NOTION_RAW"
+import json, shlex, sys
+payload=json.loads(sys.argv[1])['result']
+print('NOTION_CHECK=' + shlex.quote('ok' if payload.get('ok') else 'fail'))
+print('NOTION_URL=' + shlex.quote(payload.get('url') or ''))
 PY
-)
+)"
   if [ "$NOTION_CHECK" = "ok" ]; then
     NOTION_OK=成功
-    REASON="已完成24h时效过滤、差异化实用启发、Line内容增强与今日结论扩展。Binance RSS 若空返回则自动降级跳过，不阻断主流程。"
+    REASON="已完成24h时效过滤、去掉固定关注理由、差异化实用启发、Line内容增强与今日结论扩展。Binance RSS 若空返回则自动降级跳过，不阻断主流程。"
   else
     NOTION_OK=失败
     REASON="Notion 同步失败，详见 logs/notion-sync-*.json；GitHub 和本地日报仍已生成。"
@@ -55,10 +58,10 @@ python3 scripts/finalize_report.py \
   --feishu 成功 \
   --reason "$REASON"
 
-git add README.md prompts/improvements.md scripts/*.py scripts/*.sh state/last_run.json reports/daily reports/github reports/json export/notion export/feishu logs
+git add README.md prompts/improvements.md scripts/*.py scripts/*.sh state/*.json reports/daily reports/github reports/json export/notion export/feishu logs
 if ! git diff --cached --quiet; then
   git commit -m "daily quant ideas: $(date '+%Y-%m-%d %H:%M')"
 fi
 GIT_SSH_COMMAND='ssh -o BatchMode=yes -o ConnectTimeout=12 -o StrictHostKeyChecking=accept-new' git push
 
-printf 'DONE\nreport=%s\nnotion=%s\n' "$MARKDOWN" "$NOTION_OK"
+printf 'DONE\nreport=%s\nnotion=%s\nnotion_url=%s\n' "$MARKDOWN" "$NOTION_OK" "$NOTION_URL"

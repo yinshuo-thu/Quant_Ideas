@@ -7,6 +7,8 @@
   "feishu": {
     "mode": "message_notify",
     "target": "current_feishu_chat",
+    "chat_id": "oc_e8ea0709c4042e0aef5d6d8b22b31e07",
+    "account": "main",
     "notes": "User confirmed Feishu does not need a doc/wiki write. Send message notification directly instead."
   }
 }
