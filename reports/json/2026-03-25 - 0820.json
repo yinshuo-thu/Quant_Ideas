@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-03-25T08:20:58.176805+08:00",
+  "timezone": "Asia/Singapore",
+  "sources": [],
+  "source_errors": [
+    "arXiv q-fin: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "arXiv stat.ML: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "arXiv cs.LG: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "WSJ Markets RSS: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "Investing.com RSS: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "Cointelegraph Markets: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "Binance Announcements: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "The Block RSS: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>",
+    "GitHub Search API: <urlopen error EOF occurred in violation of protocol (_ssl.c:1129)>"
+  ],
+  "counts": {
+    "raw": 0,
+    "deduped": 0,
+    "focus": 0,
+    "backup": 0
+  },
+  "focus_items": [],
+  "research_items": [],
+  "market_items": [],
+  "backup_items": [],
+  "sync_status": {
+    "github": "成功",
+    "notion": "失败",
+    "feishu": "成功",
+    "failure_reason": "Notion 同步失败，详见 logs/notion-sync-*.json；GitHub 和本地日报仍已生成。"
+  }
+}
