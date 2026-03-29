@@ -1,0 +1,205 @@
+{
+  "generated_at": "2026-03-29T08:08:26.891575+08:00",
+  "timezone": "Asia/Singapore",
+  "sources": [
+    "WSJ Markets RSS",
+    "Investing.com RSS",
+    "Cointelegraph Markets",
+    "The Block RSS",
+    "GitHub Search API"
+  ],
+  "source_errors": [
+    "arXiv q-fin: parsed 0 items",
+    "arXiv stat.ML: parsed 0 items",
+    "arXiv cs.LG: parsed 0 items",
+    "Binance Announcements: no element found: line 1, column 0"
+  ],
+  "counts": {
+    "raw": 21,
+    "deduped": 21,
+    "focus": 6,
+    "backup": 1
+  },
+  "focus_items": [
+    {
+      "title": "Kejlemmn/Gym",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T06:42:06+08:00",
+      "link": "https://github.com/Kejlemmn/Gym",
+      "summary": "🏋️♂️ Build and scale reinforcement learning environments for large language models with NeMo Gym, designed for seamless integration and efficient training. (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "Rah9742/DRL-Asset-Trading-Agent",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T06:04:02+08:00",
+      "link": "https://github.com/Rah9742/DRL-Asset-Trading-Agent",
+      "summary": "Deep Reinforcement Learning Asset Trading Agent: Evaluating Reward Engineering and State Augmentation (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "juancarlosrial76-code/BITCOIN4Traders",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T05:39:57+08:00",
+      "link": "https://github.com/juancarlosrial76-code/BITCOIN4Traders",
+      "summary": "Bitcoin Trading Bot mit Deep Reinforcement Learning (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "Aymo-WH/algo-trading-bot",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T20:44:28+08:00",
+      "link": "https://github.com/Aymo-WH/algo-trading-bot",
+      "summary": "This repository is a Reinforcement Learning trading engine that throws away the clock. It samples the market like a machine, learns the underlying physics of different asset classes, and executes mathematically sized trades. (⭐ 2)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "koretty/fx-trading-env",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T15:17:39+08:00",
+      "link": "https://github.com/koretty/fx-trading-env",
+      "summary": "A reinforcement learning-based FX trading simulator for developing and evaluating trading strategies. (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "logan-the-engineer/logans-algorithmic-trading-platform",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T11:19:32+08:00",
+      "link": "https://github.com/logan-the-engineer/logans-algorithmic-trading-platform",
+      "summary": "Modular algorithmic trading platform built with FastAPI. Bar-by-bar backtesting engine with two registered ML strategies: a RandomForest classifier (GoldSight) and a DQN reinforcement learning agent (AlphaTrader). (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "Alpha / Features / Signals"
+    }
+  ],
+  "research_items": [
+    {
+      "title": "Kejlemmn/Gym",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T06:42:06+08:00",
+      "link": "https://github.com/Kejlemmn/Gym",
+      "summary": "🏋️♂️ Build and scale reinforcement learning environments for large language models with NeMo Gym, designed for seamless integration and efficient training. (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "Rah9742/DRL-Asset-Trading-Agent",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T06:04:02+08:00",
+      "link": "https://github.com/Rah9742/DRL-Asset-Trading-Agent",
+      "summary": "Deep Reinforcement Learning Asset Trading Agent: Evaluating Reward Engineering and State Augmentation (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "juancarlosrial76-code/BITCOIN4Traders",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-29T05:39:57+08:00",
+      "link": "https://github.com/juancarlosrial76-code/BITCOIN4Traders",
+      "summary": "Bitcoin Trading Bot mit Deep Reinforcement Learning (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "Aymo-WH/algo-trading-bot",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T20:44:28+08:00",
+      "link": "https://github.com/Aymo-WH/algo-trading-bot",
+      "summary": "This repository is a Reinforcement Learning trading engine that throws away the clock. It samples the market like a machine, learns the underlying physics of different asset classes, and executes mathematically sized trades. (⭐ 2)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "koretty/fx-trading-env",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T15:17:39+08:00",
+      "link": "https://github.com/koretty/fx-trading-env",
+      "summary": "A reinforcement learning-based FX trading simulator for developing and evaluating trading strategies. (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "ML / RL / Imitation Learning"
+    },
+    {
+      "title": "logan-the-engineer/logans-algorithmic-trading-platform",
+      "kind": "GitHub",
+      "source": "GitHub Search API",
+      "published_at": "2026-03-28T11:19:32+08:00",
+      "link": "https://github.com/logan-the-engineer/logans-algorithmic-trading-platform",
+      "summary": "Modular algorithmic trading platform built with FastAPI. Bar-by-bar backtesting engine with two registered ML strategies: a RandomForest classifier (GoldSight) and a DQN reinforcement learning agent (AlphaTrader). (⭐ 0)",
+      "line": "research",
+      "raw_score": 1,
+      "score": 4,
+      "topic": "Alpha / Features / Signals"
+    }
+  ],
+  "market_items": [
+    {
+      "title": "Morgan Stanley sets spot bitcoin ETF fee at 0.14%, undercutting every rival on the market",
+      "kind": "新闻",
+      "source": "The Block RSS",
+      "published_at": "2026-03-29T01:31:15+08:00",
+      "link": "https://www.theblock.co/post/395568/morgan-stanley-sets-spot-bitcoin-etf-fee-at-0-14-undercutting-every-rival-on-the-market?utm_source=rss&utm_medium=rss",
+      "summary": "Bloomberg ETF analyst James Seyffart called the pricing a \"big move\" and predicted that the fund may launch in early April.",
+      "line": "markets",
+      "raw_score": 1,
+      "score": 3,
+      "topic": "Equities / Futures / FX / Crypto"
+    }
+  ],
+  "backup_items": [
+    {
+      "title": "Morgan Stanley sets spot bitcoin ETF fee at 0.14%, undercutting every rival on the market",
+      "kind": "新闻",
+      "source": "The Block RSS",
+      "published_at": "2026-03-29T01:31:15+08:00",
+      "link": "https://www.theblock.co/post/395568/morgan-stanley-sets-spot-bitcoin-etf-fee-at-0-14-undercutting-every-rival-on-the-market?utm_source=rss&utm_medium=rss",
+      "summary": "Bloomberg ETF analyst James Seyffart called the pricing a \"big move\" and predicted that the fund may launch in early April.",
+      "line": "markets",
+      "raw_score": 1,
+      "score": 3,
+      "topic": "Equities / Futures / FX / Crypto"
+    }
+  ],
+  "sync_status": {
+    "github": "成功",
+    "notion": "成功",
+    "feishu": "成功",
+    "failure_reason": "已完成24h时效过滤、去掉固定关注理由、差异化实用启发、Line内容增强与今日结论扩展。Binance RSS 若空返回则自动降级跳过，不阻断主流程。"
+  }
+}
