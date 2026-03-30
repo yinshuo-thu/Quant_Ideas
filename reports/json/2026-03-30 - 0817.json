@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-03-30T08:17:11.746036+08:00",
+  "timezone": "Asia/Singapore",
+  "sources": [
+    "WSJ Markets RSS",
+    "Investing.com RSS",
+    "Cointelegraph Markets",
+    "The Block RSS"
+  ],
+  "source_errors": [
+    "arXiv q-fin: parsed 0 items",
+    "arXiv stat.ML: parsed 0 items",
+    "arXiv cs.LG: parsed 0 items",
+    "Binance Announcements: no element found: line 1, column 0",
+    "GitHub Search API: The read operation timed out"
+  ],
+  "counts": {
+    "raw": 14,
+    "deduped": 14,
+    "focus": 0,
+    "backup": 0
+  },
+  "focus_items": [],
+  "research_items": [],
+  "market_items": [],
+  "backup_items": [],
+  "sync_status": {
+    "github": "处理中",
+    "notion": "处理中",
+    "feishu": "成功",
+    "failure_reason": "处理中"
+  }
+}
