@@ -3,9 +3,10 @@
 Daily Quant Ideas Digest repo mirror. New reports are published under `reports/github/`.
 
 ## Latest Report
-- [2026-04-02 - 0800｜The Effect of Attention Head…：今天最值得盯的量化线索](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-04-02%20-%200800.md)
+- [2026-04-03 - 0800｜Faraone-Dev/NEXUS-2026：今天最值得盯的量化线索](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-04-03%20-%200800.md)
 
 ## Recent Reports
+- [2026-04-02 - 0800｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-04-02%20-%200800.md)
 - [2026-04-01 - 0800｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-04-01%20-%200800.md)
 - [2026-03-31 - 0801｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-31%20-%200801.md)
 - [2026-03-30 - 0911｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-30%20-%200911.md)
@@ -14,4 +15,3 @@ Daily Quant Ideas Digest repo mirror. New reports are published under `reports/g
 - [2026-03-28 - 0800｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-28%20-%200800.md)
 - [2026-03-27 - 0800｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-27%20-%200800.md)
 - [2026-03-26 - 0810｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-26%20-%200810.md)
-- [2026-03-25 - 0820｜Daily Quant Ideas Digest](https://github.com/yinshuo-thu/Quant_Ideas_Everyday/blob/main/reports/github/2026-03-25%20-%200820.md)
